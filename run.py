@@ -105,9 +105,6 @@ def sweep():
 ###################################### KAPPY ###############################################
 
 def run_sim(params):
-	# WARNING: should deep copy params, since this will alter their rates
-	params['fwd_PARP'] /= min(params['PARP'],params['DNA']) 	# will need to repalce 'fwd_PARP' w/ whatever the kin is called
-	# normalize sT one active PARP per tree
 
 	client = kappy.KappaStd()
 
