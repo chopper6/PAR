@@ -34,14 +34,14 @@
 
 'NG_bind_exo'	NAD(root{t/t},elong[./1],pphos[./.], acceptor[./.], branch[./.]),PARG(x[./1])  @'NG_k_exo'
 'unNG_bind_exo'	NAD(elong[1/.]),PARG(x[1/.])  @'unNG_k_exo'
-'cut_exo'	NAD(elong[1]),PARG(x[1]) -> PARG(x[.])	@cut_exo_k
+'cut_exo'	NAD(elong[1]),PARG(x[1]) -> .,PARG(x[.])	@cut_exo_k
 
 'NG_bind_endo'	NAD(root{t/t},pphos[./.], acceptor[./1]),PARG(x[./1]) @'NG_k_endo'
 'unNG_bind_endo'	NAD(acceptor[1/.]),PARG(x[1/.]) @'unNG_k_endo'
-'cut_endo'		NAD(root[_]{t},acceptor[1]),PARG(x[1]) -> NAD(root[.]{f}),PARG(x[.])				@ cut_endo_k
+'cut_endo'		NAD(root[_]{t},acceptor[1]),PARG(x[1]) -> .,PARG(x[.])				@ cut_endo_k
 
-'clean_elong'		NAD(root[.],elong[1]), NAD(root[1]{t})	-> NAD(root[.], elong[.]), NAD(root[.]{f})						@ inf
-'clean_branch'		NAD(root[.],branch[1]), NAD(root[1]{t}) -> NAD(root[.],branch[.]), NAD(root[.]{f})						@ inf
+'clean_elong'		NAD(root[.],elong[1]), NAD(root[1]{t})	-> NAD(root[.], elong[.]), .						@ inf
+'clean_branch'		NAD(root[.],branch[1]), NAD(root[1]{t}) -> NAD(root[.],branch[.]), .						@ inf
 
 
 /* Variables */
