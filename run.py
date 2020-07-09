@@ -17,7 +17,7 @@ def main():
 
 
 ############################################### EXPERIMENTS ###############################################
-
+'''
 def fig1_part1():
 	# tuning params: 'elong_boost', 'NAD', 'PARP', 'base_fwd', 'base_rev', 'base_catalysis'
 	params['PARP_2_PARG'] = 3
@@ -35,7 +35,7 @@ def fig1_part2():
 
 	for ratio in P_to_G_concen:
 		params['PARG'] = init_parp*ratio
-
+'''
 
 def hist():
 	print("\nComparing two simulations using histogram.\n")
@@ -114,11 +114,13 @@ def run_sim(params):
 	with open(params['model_file'], 'r') as file : 
 		model = file.read()
 
-	for species in ['NAD','DNA','PARP','PARG']:
-		model = model.replace("init: _ " + species, "init: " + str(params[species]) + " " + species)
+	for name in params['species'].keys():
+		val = params['species'][name]
+		model = model.replace("init: _ " + name, "init: " + str(val) + " " + name)
 
-	for rate in ['base_rev','base_fwd','catalysis_rate','cut_rate']:
-		model = model.replace("'" + rate + "' _", "'" + rate + "' " + str(params[rate]))
+	for name in params['variables'].keys():
+		val = params['variables'][name]
+		model = model.replace("var: '" + name + "' _", "var: '" + name + "' " + str(val))
 
 	model = model.replace("mod: ([E] [mod] _ )=0", "mod: ([E] [mod] " + str(params['time']/100) + " )=0")
 
