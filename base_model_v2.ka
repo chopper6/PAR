@@ -32,7 +32,7 @@
 'branch' 		PARP(pphos[1],adenine[.],acceptor[3]), NAD(pphos[1],adenine[.],branch[.]), NAD(acceptor[3],root[.]{f}) -> PARP(pphos[.],acceptor[.],adenine[.]), NAD(pphos[.],adenine[.],branch[4]), NAD(acceptor[.],root[4]{t}) @ 'base_catalysis'
 /* used to have NAD(branch[./4], elong[./.]) [abbrvd] */
 
-'NG_bind_exo'	NAD(root{t/t},elong[./1],pphos[./.], acceptor[./.], branch[./.]),PARG(x[./1])  @'NG_k_exo'
+'NG_bind_exo'	NAD(root{t},elong[.],pphos[.], acceptor[.], branch[.]),PARG(x[.]) -> NAD(root{t},elong[1],pphos[.], acceptor[.], branch[.]),PARG(x[1])  @'NG_k_exo'
 'unNG_bind_exo'	NAD(elong[1/.]),PARG(x[1/.])  @'unNG_k_exo'
 'cut_exo'	NAD(elong[1]),PARG(x[1]) -> .,PARG(x[.])	@cut_exo_k
 
