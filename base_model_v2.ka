@@ -16,8 +16,8 @@
 
 
 'NP_acceptor' 	PARP(acceptor[./1]), NAD(acceptor[./1],root{f/f}) 						@ 'NP_acceptor_rate'
-'unNP_acceptor' 	PARP(acceptor[1/.]), NAD(acceptor[1/.]) 						@ 'unNP_acceptor_rate
-'
+'unNP_acceptor' 	PARP(acceptor[1/.]), NAD(acceptor[1/.]) 						@ 'unNP_acceptor_rate'
+
 'init' 			DNA(root[./1]),PARP( acceptor[2/.]), NAD(acceptor[2/.],root[./1]{f/t}) 		@ 'PARP_k_init'
 
 'NP_p' 			PARP(pphos[.]), NAD(pphos[.],root{t},elong[.]) -> PARP(pphos[1]), NAD(pphos[1],root{t},elong[.])  			@ 'NP_p_rate'
