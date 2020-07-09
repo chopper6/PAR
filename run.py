@@ -57,6 +57,8 @@ def hist():
 		
 	util.pickle_it(all_params, data) 
 
+	print('final data=',data)
+
 	plot.hist_first_and_last(data,params,feature_names, labels) # 1 img per feature
 
 

@@ -17,7 +17,7 @@ import util
 #	Fig1 uses 2.7 U (i assume 'units'), so 6.318E+17 residues per min
 #	but avg'g is not reliable  
 
-params = ({'model_file':'base_model_v2.ka','experiment':'hist', 'repeats':2, 
+params = ({'model_file':'base_model_v2.ka','experiment':'hist', 'repeats':1, 
 	'time':1, 'timestamp':util.timestamp(),
 	'species':{'NAD':10000, 'PARG':0, 'PARP':20},
 	'variables': {'init_DNA':20,'elong_boost':400, 'endo_inhib': 1.0E-2, 
