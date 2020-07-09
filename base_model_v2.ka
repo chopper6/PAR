@@ -53,14 +53,15 @@
 %var: 'elong_boost' _
 %var: 'endo_inhib' _
 %var: 'PARP_2_PARG' _ //their relative activity
+%var: 'init_DNA' _
 
+/* More Variables */
 /* rates set by other params */
 %var: 'unNG_k_exo' base_rev
 %var: 'unNG_k_endo' base_rev
 %var: 'cut_exo_k' base_catalysis
 %var: 'cut_endo_k' base_catalysis
 %var: 'PARP_k_init' base_fwd
-%var: 'NP_acceptor_rate' base_fwd
 %var: 'unNP_acceptor_rate' base_rev
 %var: 'NP_p_rate' base_fwd
 %var: 'unNP_p_rate' base_rev
@@ -70,6 +71,7 @@
 %var: 'NG_k_exo' base_fwd*PARP_2_PARG
 %var: 'NG_k_endo' base_fwd*PARP_2_PARG*endo_inhib
 %var: 'NP_a_rate' base_catalysis*elong_boost*unNP_a_rate
+%var: 'NP_acceptor_rate' base_fwd/init_DNA
 
 %obs: 'Chain_NAD' |NAD(elong[1],root[_]), NAD(root[1])|
 
@@ -78,10 +80,9 @@
 %obs: 'illegal_1' |PARP(acceptor[1],pphos[2]), NAD(acceptor[1],pphos[2])|
 %obs: 'illegal_2' |PARP(adenine[1]), NAD(adenine[1],pphos[.])|
 
-
 /* Initial conditions */
 // everything starts unbound
-%init: _ DNA()
+%init: init_DNA DNA()
 %init: _ PARP()
 %init: _ NAD()
 %init: _ PARG()
