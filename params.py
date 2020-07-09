@@ -18,7 +18,7 @@ import util
 #	but avg'g is not reliable  
 
 params = ({'model_file':'base_model_v2.ka','experiment':'hist', 'repeats':2, 
-	'time':1000, 'timestamp':util.timestamp(),
+	'time':1, 'timestamp':util.timestamp(),
 	'species':{'NAD':10000, 'PARG':0, 'PARP':20},
 	'variables': {'init_DNA':20,'elong_boost':400, 'endo_inhib': 1.0E-2, 
 	'PARP_2_PARG': 3,'base_fwd':1.0E+2, 'base_rev':1.0E-2, 'base_catalysis':1.0E+5},
