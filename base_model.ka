@@ -1,0 +1,75 @@
+/* POLY ADP RIBOSE MODEL */
+
+
+/* Signatures */
+
+%agent: PARP(root,adenine,pphos,branch,elong,acceptor)  
+%agent: DNA(root) 
+%agent: NAD(root{f t},adenine,pphos,branch,elong,acceptor) 
+%agent: PARG()
+
+// f,t of NAD are used to denote if it is rooted (true) or not (false) (either to DNA or another NAD)
+// i.e. {t,f} just used as a proxy for 'bound to anything' that is syntactically more flexible than _
+// currently PARP needs to bind to DNA to be active, however, this doesn't enforce that a PARP actually adds to its own chain and not that of another DNA...just limits # active PARPs...can
+
+/* Rules */
+
+
+'NP_acceptor' 	PARP(acceptor[./1]), NAD(acceptor[./1],root{f/f}) 						@ 'NP_acceptor_rate'
+'unNP_acceptor' 	PARP(acceptor[1/.]), NAD(acceptor[1/.]) 						@ 'unNP_acceptor_rate
+'
+'init' 			DNA(root[./1]),PARP( acceptor[2/.]), NAD(acceptor[2/.],root[./1]{f/t}) 		@ 'PARP_k_init'
+
+'NP_p' 			PARP(pphos[.]), NAD(pphos[.],root{t},elong[.]) -> PARP(pphos[1]), NAD(pphos[1],root{t},elong[.])  			@ 'NP_p_rate'
+
+'unNP_p' 		PARP(pphos[1/.],adenine[_/.]), NAD(pphos[1/.],adenine[_/.]) 								@ 'unNP_p_rate'
+
+'NP_a' 			PARP(adenine[./2],pphos[1/1]), NAD(adenine[./2],pphos[1/1], root{t/t}) 				@ 'PARP_k_cat'*'elong_boost'*unNP_a_rate
+'unNP_a' 		PARP(adenine[1/.]), NAD(adenine[1/.]) 								@ 'unNP_a_rate'
+
+'elongate' 		PARP(pphos[1/.],adenine[2/.],acceptor[3/.]), NAD(pphos[1/.],adenine[2/.],root{t/t},elong[./4]), NAD(acceptor[3/.],root[./4]{f/t}) @ 'PARP_k_cat'
+
+'branch' 		PARP(pphos[1],adenine[.],acceptor[3]), NAD(pphos[1],adenine[.],branch[.]), NAD(acceptor[3],root[.]{f}) -> PARP(pphos[.],acceptor[.],adenine[.]), NAD(pphos[.],adenine[.],branch[4]), NAD(acceptor[.],root[4]{t}) @ 'PARP_k_cat'
+/* used to have NAD(branch[./4], elong[./.]) [abbrvd] */
+
+'cut'		NAD(root[_]{t}),PARG() -> NAD(root[.]{f}),PARG()				@ cut_endo_rate
+'cut_exo'	NAD(pphos[.],root[_]{t},elong[.],branch[.],acceptor[.]),PARG() -> NAD(pphos[.],root[.]{f},elong[.],branch[.],acceptor[.]), PARG()		@cut_exo_rate
+
+
+'clean_elong'		NAD(root[.],elong[1]), NAD(root[1]{t})	-> NAD(root[.], elong[.]), NAD(root[.]{f})						@ inf
+'clean_branch'		NAD(root[.],branch[1]), NAD(root[1]{t}) -> NAD(root[.],branch[.]), NAD(root[.]{f})						@ inf
+
+/* Variables */
+
+/* a _ will be replaced in the python script */
+
+%var: 'PARP_fwd' _
+%var: 'PARP_rev' _
+%var: 'PARP_k_cat' _
+%var: 'cut_endo_k' _ //PARG bind and catalyze
+%var: 'cut_exo_k' _
+%var: 'elong_boost' _
+
+%var: 'PARP_k_init' PARP_fwd
+%var: 'NP_acceptor_rate' PARP_fwd
+%var: 'unNP_acceptor_rate' PARP_rev
+%var: 'NP_p_rate' PARP_fwd
+%var: 'unNP_p_rate' PARP_rev
+%var: 'unNP_a_rate' PARP_rev //weakly bound; note that NP_a_rate=elong_boost*unNP_a_rate*catalysis_rate
+
+%obs: 'Chain_NAD' |NAD(elong[1],root[_]), NAD(root[1])|
+
+// there's a bug if illegal states are seen
+// add some illegal states
+%obs: 'illegal_1' |PARP(acceptor[1],pphos[2]), NAD(acceptor[1],pphos[2])|
+%obs: 'illegal_2' |PARP(adenine[1]), NAD(adenine[1],pphos[.])|
+
+
+/* Initial conditions */
+// everything starts unbound
+%init: _ DNA()
+%init: _ PARP()
+%init: _ NAD()
+%init: _ PARG()
+
+%mod: ([E] [mod] _ )=0 do $SNAPSHOT "abc.ka"; repeat [true]
