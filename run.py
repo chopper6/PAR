@@ -121,7 +121,10 @@ def run_sim(params):
 		val = params['variables'][name]
 		model = model.replace("var: '" + name + "' _", "var: '" + name + "' " + str(val))
 
-	model = model.replace("mod: ([E] [mod] _ )=0", "mod: ([E] [mod] " + str(params['time']/100) + " )=0")
+	model = model.replace("mod: ([E] [mod] _ )=0", "mod: ([E] [mod] " + str(params['time']/params['snapshot_freq']) + " )=0")
+	with open(params['output_model_file'], 'w') as file : 
+		file.write(model)
+
 
 	client.add_model_string(model)
 	client.project_parse()
