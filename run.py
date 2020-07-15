@@ -131,7 +131,7 @@ def time_series():
 	for i in range(len(data)):
 		features.merge_repeats(params, merged_data[i], data[i], feature_names)
 		
-	util.pickle_it(params, merged_data) 
+	util.pickle_it([params], merged_data) 
 
 	plot.time_series(merged_data,params,feature_names,['sum']) 
 
