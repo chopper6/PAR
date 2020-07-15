@@ -84,10 +84,26 @@
 // everything starts unbound
 %init: init_DNA DNA()
 %init: 1 PARP()
-%init: 100 NAD()
+%init: 1000 NAD()
 %init: 0 PARG()
 
+%mod: alarm 0.05 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.1 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.15 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.2 do $SNAPSHOT "abc.ka";
 %mod: alarm 0.25 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.3 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.35 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.4 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.45 do $SNAPSHOT "abc.ka";
 %mod: alarm 0.5 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.55 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.6 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.65 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.7 do $SNAPSHOT "abc.ka";
 %mod: alarm 0.75 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.8 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.85 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.9 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.95 do $SNAPSHOT "abc.ka";
 %mod: alarm 1.0 do $SNAPSHOT "abc.ka";
