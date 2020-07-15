@@ -55,7 +55,7 @@ def time_series(data,params,feature_names, metrics):
         for metric in metrics:
             assert(metric in data[0][feature].keys()) #if error, metric is not calculated in features.extract_stats()
             title, ylabel = feature + '_' + metric, feature + '_' + metric
-            time_series_one(data,feature,metric, params, title, feature, loglog=False)
+            time_series_one(data,feature,metric, params, title, feature, loglog=True)
 
 def time_series_one(data, feature,metric, params, title, ylabel,loglog=False):
     #print("\nPLOT for %s \n Y, variable_values" %ylabel, Y, variable_values)
