@@ -28,17 +28,10 @@ def param_sweep_one(Y, params, variable_values, title, xlabel, ylabel, loglog=Tr
 	#print("Yavg: ", Y['avg'])
 	fig = plt.figure(figsize=(12,8))
 	y_avg = Y['avg']
-	if params['std_devs']==1:
+	if not params['use_CI']:
 		top, btm = np.add(Y['avg'],Y['std']), np.subtract(Y['avg'],Y['std'])
-		#top, btm= Y['avg'] + Y['std'], Y['avg']- Y['std']
-	#elif params['std_devs']==1:
-	#	top,btm = Y['top1'], Y['btm1']
-	elif params['std_devs']==2:
-		top,btm = Y['top2'], Y['btm2']
-	elif params['std_devs']==3:
-		top,btm = Y['top3'], Y['btm3']
 	else:
-		assert(False) #unrecognized # std_devs
+		top, btm = Y['CI'][1], Y['CI'][0]
 
 	if loglog:
 		plt.loglog(variable_values,y_avg,alpha=.8, linewidth=2, color='blue')
@@ -47,7 +40,7 @@ def param_sweep_one(Y, params, variable_values, title, xlabel, ylabel, loglog=Tr
 	
 	plt.fill_between(variable_values,top,btm,alpha=.2, color='blue')
 
-	finish_plot(params,'Splot_' + title, xlabel, ylabel)
+	finish_plot(params,'param_sweep_' + title, xlabel, ylabel)
 
 
 def param_sweep(data, params, variable_values, variable_name, feature_names):
@@ -55,6 +48,35 @@ def param_sweep(data, params, variable_values, variable_name, feature_names):
 		for metric in data[feature].keys():
 			title, ylabel = variable_name + '_x_' + '_' + feature + '_' + metric, feature + '_' + metric
 			param_sweep_one(data[feature][metric], params, variable_values, title, variable_name, ylabel)
+
+
+def time_series(merged_data,params,feature_names, metrics):
+	for feature in feature_names:
+		for metric in metrics:
+			asssert(metric in data[feature].keys()) #if error, metric is not calculated in features.extract_stats()
+			title, ylabel = variable_name + '_x_' + '_' + feature + '_' + metric, feature + '_' + metric
+			time_series_one(data[feature][metric], params, title, feature, loglog=False)
+
+def time_series_one(Y, params, variable_values, title, ylabel,loglog=False):
+	#print("\nPLOT for %s \n Y, variable_values" %ylabel, Y, variable_values)
+	#print("Yavg: ", Y['avg'])
+	X = [i*params['time']/params['num_snapshots'] for i in range(len(Y['avg']))]
+
+	fig = plt.figure(figsize=(12,8))
+	y_avg = Y['avg']
+	if not params['use_CI']:
+		top, btm = np.add(Y['avg'],Y['std']), np.subtract(Y['avg'],Y['std'])
+	else:
+		top, btm = Y['CI'][1], Y['CI'][0]
+
+	if loglog:
+		plt.loglog(X,y_avg,alpha=.8, linewidth=2, color='blue')
+	else:
+		plt.plot(X,y_avg,alpha=.8, linewidth=2, color='blue')
+	
+	plt.fill_between(X,top,btm,alpha=.2, color='blue')
+
+	finish_plot(params,'Time_series_' + title, 'Time', ylabel)
 
 
 
@@ -75,7 +97,7 @@ def finish_plot(params, title, xlabel, ylabel):
 	#fig.tight_layout()
 	
 	if params['save_fig']:
-		title = params['out_dir']+util.timestamp()+'_'+title+'.png'
+		title = params['out_dir']+title+'_'+params['timestamp']+'.png'
 		plt.savefig(title,dpi=params['dpi'])
 	else:
 		plt.show()

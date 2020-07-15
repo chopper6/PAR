@@ -20,14 +20,18 @@ def get_features(snap) :
 	graphs = snap['snapshot_agents']
 	infos = [] 
 	for graph in graphs : #run through the graphs
-		if graph[1][0]['node_type'] == 'PARG' :
-			continue
-		info = {}
+		# if size of graph is 1 should catch all of this:
+		# ignores if PARG or PARP bound at end, but v minor effect
+
+		#if graph[1][0]['node_type'] == 'PARG' :
+		#	continue
+		#info = {}
 
 		size = len(graph[1])
 		if size > 1:
 			info['size'] = len(graph[1]) # number of agents
 			info['number'] = graph[0] #number of that kind of graph
+			info['residues'] = len(graph[1])*graph[0]
 			info['branching ratio'] = get_branch_number(graph)/info['size']
 			
 			for i in range(int(info['number'])):
@@ -43,13 +47,7 @@ def get_features(snap) :
 
 def extract_one(name, sshot):
 	data = get_features(sshot)
-	if name == 'size':
-		feat = [data[i]['size'] for i in rng(data)] 
-	elif name == 'branching ratio':
-		feat = [data[i]['branching ratio'] for i in rng(data)] 
-	else: 
-		assert(False) #feature name not recognized
-
+	feat = [data[i][name] for i in rng(data)] # if error, feature name is not recognized
 	return feat
 
 def extract_stats(data, feature_names, sshot):
@@ -59,6 +57,7 @@ def extract_stats(data, feature_names, sshot):
 
 			data[name]['avg'] += [util.avg(feat)]
 			data[name]['var'] += [util.var(feat)]
+			data[name]['sum'] += [sum(feat)]
 			if util.avg(feat) != 0:
 				iod = util.var(feat)/util.avg(feat)
 			else:
@@ -77,7 +76,7 @@ def extract_stats(data, feature_names, sshot):
 			#print("DATA %s" %(name), data[name])
 
 
-def merge_repeats(merged_data, repeats_data, feature_names, CI=False):
+def merge_repeats(params, merged_data, repeats_data, feature_names):
 	for name in feature_names:
 		for metric in repeats_data[name].keys():
 
@@ -94,12 +93,19 @@ def merge_repeats(merged_data, repeats_data, feature_names, CI=False):
 			merged_data[name][metric]['std'] += [std]
 			#print('avg, std', merged_data[name][metric]['avg'],merged_data[name][metric]['std'],a,'\n')
 
-			if CI:
+			if params['use_CI']:
 
-				conf_interval1 = st.t.interval(0.68, len(a)-1, loc=mean, scale=st.sem(a)) #1 standard devs
-				conf_interval2 = st.t.interval(0.95, len(a)-1, loc=mean, scale=st.sem(a)) #2 standard devs
-				conf_interval3 = st.t.interval(0.997, len(a)-1, loc=mean, scale=st.sem(a)) #3 standard devs
+				if params['std_devs']==1:
+					conf_interval = st.t.interval(0.68, len(a)-1, loc=mean, scale=st.sem(a)) #1 standard devs
+				elif params['std_devs']==2:
+					conf_interval = st.t.interval(0.95, len(a)-1, loc=mean, scale=st.sem(a)) #2 standard devs
+				elif params['std_devs']==3:
+					conf_interval = st.t.interval(0.997, len(a)-1, loc=mean, scale=st.sem(a)) #3 standard devs
+				else:
+					assert(False)
 
+				merged_data[name][metric]['CI'] = conf_interval
+				'''
 				intervals, stats = [conf_interval1, conf_interval2, conf_interval3], [['top1','btm1'],['top2','btm2'],['top3','btm3']]
 				for i in util.rng(intervals):
 					interval, stat = intervals[i], stats[i]
@@ -116,5 +122,6 @@ def merge_repeats(merged_data, repeats_data, feature_names, CI=False):
 					merged_data[name][metric][stat[1]] += [conf_min]
 
 				#print('features:',metric,merged_data[name][metric])
+				'''
 
 

@@ -50,7 +50,8 @@ def hist():
 	data = {n:[] for n in feature_names}
 	for i in rng(NADs):
 		params['NAD'] = NADs[i]
-		sshot = run_sim(deepcopy(params))
+		sshots = run_sim(deepcopy(params))
+		sshot = sshots[-1] #get last one
 		for feat in feature_names:
 			data[feat] += [features.extract_one(feat, sshot)]
 		all_params += [params]
@@ -75,8 +76,8 @@ def sweep():
 
 	feature_names = ['size', 'branching ratio']
 
-	stats = {'avg':[], 'std':[],'top1':[], 'top2':[],'top3':[], 'btm1':[],'btm2':[],'btm3':[]}
-	merged_data = {n:{'avg':deepcopy(stats), 'var':deepcopy(stats), 'max':deepcopy(stats), 'iod':deepcopy(stats),'1:2':deepcopy(stats)} for n in feature_names}
+	stats = {'avg':[], 'std':[],'CI':[]}
+	merged_data = {n:{'avg':deepcopy(stats), 'var':deepcopy(stats), 'sum':deepcopy(stats), 'max':deepcopy(stats), 'iod':deepcopy(stats),'1:2':deepcopy(stats)} for n in feature_names}
 
 
 	shots = []
@@ -87,12 +88,13 @@ def sweep():
 		#print("[PARG] = ",PARGs[i])
 		#params['cut_rate'] = PARGs[i]
 		#print("cut_rate = ",PARGs[i])
-		repeats_data = {n:{'avg':[],'var':[], 'max':[], 'iod':[],'1:2':[]} for n in feature_names}
+		repeats_data = {n:{'avg':[],'var':[], 'sum':[], 'max':[], 'iod':[],'1:2':[]} for n in feature_names}
 		# Format: data[feature_name][stat]. Example: data['size']['avg']
 
 		for r in range(params['repeats']):
 
-			sshot = run_sim(deepcopy(params))
+			sshots = run_sim(deepcopy(params))
+			sshot = sshots[-1] #get last one
 			features.extract_stats(repeats_data, feature_names,sshot)
 
 		features.merge_repeats(merged_data, repeats_data, feature_names)
@@ -103,6 +105,33 @@ def sweep():
 	plot.param_sweep(merged_data,params,NADs,'[NAD]',feature_names) #features * stats imgs
 	#plot.param_sweep(merged_data,params,PARGs,'PARG rate',feature_names) #features * stats imgs
 
+
+def time_series(params):
+	print("\nRunning time series with repeats.\n")
+
+	feature_names = ['residues']
+
+	stats = {'avg':[], 'std':[],'CI':[]}
+	merged_data = [{n:{'avg':deepcopy(stats), 'var':deepcopy(stats), 'sum':deepcopy(stats), 'max':deepcopy(stats), 'iod':deepcopy(stats),'1:2':deepcopy(stats)} for n in feature_names} for t in range(params['num_snapshots'])]
+
+	data = [{n:{'avg':[],'var':[], 'sum':[], 'max':[], 'iod':[],'1:2':[]} for n in feature_names} for t in range(params['num_snapshots'])]
+	# Format: data[feature_name][stat]. Example: data['size']['avg']
+
+	for r in range(params['repeats']):
+
+		sshots = run_sim(deepcopy(params))
+		if not len(sshots) == len(data):
+			print('#sshots wrong! asked for %s, but got %s' %(len(sshots), len(data)))
+			assert(False)
+		for i in range(len(sshots)):
+			features.extract_stats(data[i], feature_names,sshots[i])
+
+	for i in range(len(data)):
+		features.merge_repeats(merged_data[i], data[i], feature_names)
+		
+	util.pickle_it(params, merged_data) 
+
+	plot.time_series(merged_data,params,feature_names,['sum']) 
 
 ###################################### KAPPY ###############################################
 
@@ -120,8 +149,8 @@ def run_sim(params):
 	for name in params['variables'].keys():
 		val = params['variables'][name]
 		model = model.replace("var: '" + name + "' _", "var: '" + name + "' " + str(val))
-
-	model = model.replace("mod: ([E] [mod] _ )=0", "mod: ([E] [mod] " + str(params['time']/params['snapshot_freq']) + " )=0")
+ 
+	model = model.replace("mod: ([E] [mod] _ )=0", "mod: ([E] [mod] " + str(params['time']/params['num_snapshots']) + " )=0")
 	with open(params['output_model_file'], 'w') as file : 
 		file.write(model)
 
@@ -133,7 +162,9 @@ def run_sim(params):
 	client.wait_for_simulation_stop()
 	results = client.simulation_plot()
 	snaps = client.simulation_snapshots()
-	snap  = client.simulation_snapshot(snaps['snapshot_ids'][0])
+	num_snaps = len(client.simulation_snapshot(snaps['snapshot_ids']))
+	iter_over = [i for i in range(num_snaps)].reverse() #for some reason sshots are reverse sorted
+	snaps  = [client.simulation_snapshot(snaps['snapshot_ids'][i]) for i in iter_over]
 
 	#for i in rng(snaps['snapshot_ids']):
 	#	snap  = client.simulation_snapshot(snaps['snapshot_ids'][i])
@@ -143,6 +174,6 @@ def run_sim(params):
 	client.simulation_delete()
 	client.shutdown()
 
-	return snap
+	return snaps
 
 main()
