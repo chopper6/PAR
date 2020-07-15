@@ -111,8 +111,8 @@ def sweep():
 def time_series():
 	print("\nRunning time series with repeats.\n")
 
-	feature_names = ['size', 'branching ratio']
-
+	plot_specs = [{'feature':'size','metric':'sum','logscale':'Y'},{'feature':'branching ratio','metric':'avg','logscale':None}]
+	feature_names = [plot_species[i]['feature'] for i in range(len(plot_specs))]
 	stats = {'avg':[], 'std':[],'CI':[]}
 	merged_data = [{n:{'avg':deepcopy(stats), 'var':deepcopy(stats), 'sum':deepcopy(stats), 'max':deepcopy(stats), 'iod':deepcopy(stats),'1:2':deepcopy(stats)} for n in feature_names} for t in range(params['num_snapshots'])]
 
@@ -133,7 +133,7 @@ def time_series():
 		
 	util.pickle_it([params], merged_data) 
 
-	plot.time_series(merged_data,params,feature_names,['sum']) 
+	plot.time_series(merged_data,params,plot_specs)
 
 ###################################### KAPPY ###############################################
 
