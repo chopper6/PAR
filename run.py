@@ -10,6 +10,8 @@ def main():
 		hist()
 	elif params['experiment'] == 'sweep':
 		sweep()
+	elif params['experiment'] in ['time','time_series']:
+		time_series()
 	else: 
 		assert(False) #unknown 'experiment' param
 
