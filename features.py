@@ -28,6 +28,7 @@ def get_features(snap) :
         info = {}
 
         size = len(graph[1])
+        #print('size, num:',len(graph[1]),graph[0])
         if size > 1:
             info['size'] = len(graph[1]) # number of agents
             info['number'] = graph[0] #number of that kind of graph
@@ -36,7 +37,7 @@ def get_features(snap) :
             for i in range(int(info['number'])):
                 infos += [info]
 
-
+    #print('num trees = ',len(infos),'\n\n')
     return infos
 
 

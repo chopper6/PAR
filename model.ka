@@ -47,14 +47,14 @@
 /* Variables */
 
 /* params to be replaced by python script (at '_') */
-%var: 'base_fwd' 1.0
+%var: 'base_fwd' 0.5
 %var: 'base_rev' 1e-06
-%var: 'base_catalysis' 10000000.0
+%var: 'base_catalysis' 1000000.0
 %var: 'elong_boost' 400
-%var: 'endo_inhib' 0.02
-%var: 'PARP_2_PARG' 3 //their relative activity
+%var: 'endo_inhib' 10000000000.0
+%var: 'PARP_2_PARG' 1 //their relative activity
 %var: 'init_DNA' 10
-%var: 'amt_PARG_to_add' _
+%var: 'amt_PARG_to_add' 10
 
 /* More Variables */
 /* rates set by other params */
@@ -85,11 +85,11 @@
 // everything starts unbound
 %init: init_DNA DNA()
 %init: 100 PARP()
-%init: 10000 NAD()
+%init: 1000 NAD()
 %init: 0 PARG()
 
 %mod: alarm 1.0 do $ADD amt_PARG_to_add PARG();
-%mod: alarm 1.0 do $DEL PARP();
+%mod: alarm 1.0 do $DEL |PARP()| PARP();
 %mod: alarm 0.05 do $SNAPSHOT "0.05.ka";
 %mod: alarm 0.1 do $SNAPSHOT "0.1.ka";
 %mod: alarm 0.15 do $SNAPSHOT "0.15.ka";
@@ -110,3 +110,43 @@
 %mod: alarm 0.9 do $SNAPSHOT "0.9.ka";
 %mod: alarm 0.95 do $SNAPSHOT "0.95.ka";
 %mod: alarm 1.0 do $SNAPSHOT "1.0.ka";
+%mod: alarm 1.05 do $SNAPSHOT "1.05.ka";
+%mod: alarm 1.1 do $SNAPSHOT "1.1.ka";
+%mod: alarm 1.15 do $SNAPSHOT "1.15.ka";
+%mod: alarm 1.2 do $SNAPSHOT "1.2.ka";
+%mod: alarm 1.25 do $SNAPSHOT "1.25.ka";
+%mod: alarm 1.3 do $SNAPSHOT "1.3.ka";
+%mod: alarm 1.35 do $SNAPSHOT "1.35.ka";
+%mod: alarm 1.4 do $SNAPSHOT "1.4.ka";
+%mod: alarm 1.45 do $SNAPSHOT "1.45.ka";
+%mod: alarm 1.5 do $SNAPSHOT "1.5.ka";
+%mod: alarm 1.55 do $SNAPSHOT "1.55.ka";
+%mod: alarm 1.6 do $SNAPSHOT "1.6.ka";
+%mod: alarm 1.65 do $SNAPSHOT "1.65.ka";
+%mod: alarm 1.7 do $SNAPSHOT "1.7.ka";
+%mod: alarm 1.75 do $SNAPSHOT "1.75.ka";
+%mod: alarm 1.8 do $SNAPSHOT "1.8.ka";
+%mod: alarm 1.85 do $SNAPSHOT "1.85.ka";
+%mod: alarm 1.9 do $SNAPSHOT "1.9.ka";
+%mod: alarm 1.95 do $SNAPSHOT "1.95.ka";
+%mod: alarm 2.0 do $SNAPSHOT "2.0.ka";
+%mod: alarm 2.05 do $SNAPSHOT "2.05.ka";
+%mod: alarm 2.1 do $SNAPSHOT "2.1.ka";
+%mod: alarm 2.15 do $SNAPSHOT "2.15.ka";
+%mod: alarm 2.2 do $SNAPSHOT "2.2.ka";
+%mod: alarm 2.25 do $SNAPSHOT "2.25.ka";
+%mod: alarm 2.3 do $SNAPSHOT "2.3.ka";
+%mod: alarm 2.35 do $SNAPSHOT "2.35.ka";
+%mod: alarm 2.4 do $SNAPSHOT "2.4.ka";
+%mod: alarm 2.45 do $SNAPSHOT "2.45.ka";
+%mod: alarm 2.5 do $SNAPSHOT "2.5.ka";
+%mod: alarm 2.55 do $SNAPSHOT "2.55.ka";
+%mod: alarm 2.6 do $SNAPSHOT "2.6.ka";
+%mod: alarm 2.65 do $SNAPSHOT "2.65.ka";
+%mod: alarm 2.7 do $SNAPSHOT "2.7.ka";
+%mod: alarm 2.75 do $SNAPSHOT "2.75.ka";
+%mod: alarm 2.8 do $SNAPSHOT "2.8.ka";
+%mod: alarm 2.85 do $SNAPSHOT "2.85.ka";
+%mod: alarm 2.9 do $SNAPSHOT "2.9.ka";
+%mod: alarm 2.95 do $SNAPSHOT "2.95.ka";
+%mod: alarm 3.0 do $SNAPSHOT "3.0.ka";

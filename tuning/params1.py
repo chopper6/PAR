@@ -17,11 +17,11 @@ import util
 #	Fig1 uses 2.7 U (i assume 'units'), so 6.318E+17 residues per min
 #	but avg'g is not reliable  
 
-params = ({'model_file':'menard_fig1.ka','output_model_file':'model.ka','experiment':'time', 'repeats':2, 
-	'time':3, 'timestamp':util.timestamp(), 'num_snapshots':60,
-	'species':{'NAD':1000, 'PARG':0, 'PARP':100}, 
-	'variables': {'init_DNA':10,'elong_boost':400, 'endo_inhib': 0, 'amt_PARG_to_add': 10,
-	'PARP_2_PARG': 1,'base_fwd':5.0E-1, 'base_rev':1.0E-6, 'base_catalysis':1.0E+6},
+params = ({'model_file':'base_model_v2.ka','output_model_file':'model.ka','experiment':'time', 'repeats':2, 
+	'time':1, 'timestamp':util.timestamp(), 'num_snapshots':20,
+	'species':{'NAD':10000, 'PARG':0, 'PARP':100},
+	'variables': {'init_DNA':10,'elong_boost':400, 'endo_inhib': 2.0E-2, 
+	'PARP_2_PARG': 0,'base_fwd':1.0E+0, 'base_rev':1.0E-6, 'base_catalysis':1.0E+7},
 	'out_dir':'./output/', 'write_params_on_img':1, 'save_fig':0, 'dpi':100,
 	'use_CI':0,'std_devs':3})
 
