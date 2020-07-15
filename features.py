@@ -64,16 +64,19 @@ def extract_stats(data, feature_names, sshot):
 				iod = 0
 			data[name]['iod'] += [iod]
 			max1 = max(feat)
-			feat.remove(max1)
-			max2 = max(feat)
 			data[name]['max'] += [max1]
+			len(feat)<1:
+				data[name]['1:2'] = 0
+			else:
+				feat.remove(max1)
+				max2 = max(feat)
 
-			if max1==0:
-				ratio = 0
-			else: 
-				ratio = (max1 - max2)/max1
-			data[name]['1:2'] += [ratio]
-			#print("DATA %s" %(name), data[name])
+				if max1==0:
+					ratio = 0
+				else: 
+					ratio = (max1 - max2)/max1
+				data[name]['1:2'] += [ratio]
+				#print("DATA %s" %(name), data[name])
 
 
 def merge_repeats(params, merged_data, repeats_data, feature_names):
