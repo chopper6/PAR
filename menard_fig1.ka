@@ -89,4 +89,4 @@
 %init: 0 PARG()
 
 %mod: alarm 1.0 do $ADD amt_PARG_to_add PARG();
-%mod: alarm 1.0 do $DEL PARP();
+%mod: alarm 1.0 do $DEL |PARP()| PARP();
