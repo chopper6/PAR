@@ -61,18 +61,19 @@ def time_series_one(data, feature,metric, params, title, ylabel,loglog=False):
 	#print("\nPLOT for %s \n Y, variable_values" %ylabel, Y, variable_values)
 	#print("Yavg: ", Y['avg'])
 	X = [(i+1)*params['time']/params['num_snapshots'] for i in range(params['num_snapshots'])]
-	Y = [data[i][feature][metric] for i in range(params['num_snapshots'])]
+	Y_avg = [data[i][feature][metric]['avg'] for i in range(params['num_snapshots'])]
 	fig = plt.figure(figsize=(12,8))
-	print('X,Y=',X,Y)
+
 	if not params['use_CI']:
-		top, btm = np.add(Y['avg'],Y['std']), np.subtract(Y['avg'],Y['std'])
+		Y_std = [data[i][feature][metric]['std'] for i in range(params['num_snapshots'])]
+		top, btm = np.add(Y_avg,Y_std), np.subtract(Y_avg,Y_std)
 	else:
 		top, btm = Y['CI'][1], Y['CI'][0]
 
 	if loglog:
-		plt.loglog(X,Y['avg'],alpha=.8, linewidth=2, color='blue')
+		plt.loglog(X,Y_avg,alpha=.8, linewidth=2, color='blue')
 	else:
-		plt.plot(X,Y['avg'],alpha=.8, linewidth=2, color='blue')
+		plt.plot(X,Y_avg,alpha=.8, linewidth=2, color='blue')
 	
 	plt.fill_between(X,top,btm,alpha=.2, color='blue')
 
