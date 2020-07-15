@@ -40,8 +40,8 @@
 'unNG_bind_endo'	NAD(acceptor[1/.]),PARG(x[1/.]) @'unNG_k_endo'
 'cut_endo'		NAD(root[_]{t},acceptor[1]),PARG(x[1]) -> NAD(root[.]{f},acceptor[.]),PARG(x[.])				@ cut_endo_k
 
-'clean_elong'		NAD(root[.],elong[1]), NAD(root[1]{t})	-> ., NAD(root[.]{f})						@ inf
-'clean_branch'		NAD(root[.],branch[1]), NAD(root[1]{t}) -> ., NAD(root[.]{f})							@ inf
+'clean_elong'		NAD(root[.],elong[1]), NAD(root[1]{t})	-> ., NAD(root[.]{f})						@ clean_rate
+'clean_branch'		NAD(root[.],branch[1]), NAD(root[1]{t}) -> ., NAD(root[.]{f})							@ clean_rate
 
 
 /* Variables */
@@ -67,6 +67,7 @@
 %var: 'NP_p_rate' base_fwd
 %var: 'unNP_p_rate' base_rev
 %var: 'unNP_a_rate' base_rev 
+%var: 'clean_rate' base_catalysis
 
 /* calculated rates, specified by constraints */
 %var: 'NG_k_exo' base_fwd*PARP_2_PARG
