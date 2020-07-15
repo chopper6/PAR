@@ -66,7 +66,7 @@ def extract_stats(data, feature_names, sshot):
 			max1 = max(feat)
 			data[name]['max'] += [max1]
 			if len(feat)<=1:
-				data[name]['1:2'] = 0
+				data[name]['1:2'] += [0]
 			else:
 				feat.remove(max1)
 				max2 = max(feat)

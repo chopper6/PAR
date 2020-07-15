@@ -61,7 +61,7 @@ def time_series_one(data, feature,metric, params, title, ylabel,loglog=False):
 	#print("\nPLOT for %s \n Y, variable_values" %ylabel, Y, variable_values)
 	#print("Yavg: ", Y['avg'])
 	X = [(i+1)*params['time']/params['num_snapshots'] for i in range(params['num_snapshots'])]
-	Y = [data[i][feature][metric]['avg'] for i in range(params['num_snapshots'])]
+	Y = [data[i][feature][metric] for i in range(params['num_snapshots'])]
 	fig = plt.figure(figsize=(12,8))
 	print('X,Y=',X,Y)
 	if not params['use_CI']:
