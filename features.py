@@ -25,7 +25,7 @@ def get_features(snap) :
 
 		#if graph[1][0]['node_type'] == 'PARG' :
 		#	continue
-		#info = {}
+		info = {}
 
 		size = len(graph[1])
 		if size > 1:
