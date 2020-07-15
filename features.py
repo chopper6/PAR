@@ -28,7 +28,7 @@ def get_features(snap) :
         info = {}
 
         size = len(graph[1])
-        if size > 1 and graph[1][0]['node_type'] == 'NAD':
+        if size > 1:
             info['size'] = len(graph[1]) # number of agents
             info['number'] = graph[0] #number of that kind of graph
             info['branching ratio'] = get_branch_number(graph)/info['size']
