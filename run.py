@@ -154,7 +154,7 @@ def run_sim(params):
  
 	output_times = [t*params['time']/params['num_snapshots'] for t in range(1,params['num_snapshots']+1)]
 	for t in output_times:
-		model += '\n%mod: alarm ' +str(t) + ' do $SNAPSHOT "abc.ka";'
+		model += '\n%mod: alarm ' +str(t) + ' do $SNAPSHOT "' + str(t) + '.ka";'
 	#model = model.replace("mod: ([E] [mod] _ )=0", "mod: ([E] [mod] " + str(params['time']/params['num_snapshots']) + " )=0")
 	with open(params['output_model_file'], 'w') as file : 
 		file.write(model)

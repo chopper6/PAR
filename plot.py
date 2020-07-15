@@ -72,8 +72,8 @@ def time_series_one(data, feature,metric, params, title, ylabel,loglog=False):
         assert(False) #gotta fix
         top, btm = Y['CI'][1], Y['CI'][0]
 
-    print('X,Y_avg, Y_std:',X,Y_avg,Y_std)
-    print('top, btm',top,btm)
+    #print('X,Y_avg, Y_std:',X,Y_avg,Y_std)
+    #print('top, btm',top,btm)
     if loglog:
         plt.loglog(X,Y_avg,alpha=.8, linewidth=2, color='blue')
     else:
