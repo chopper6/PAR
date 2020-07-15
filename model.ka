@@ -87,7 +87,6 @@
 %init: 100 NAD()
 %init: 0 PARG()
 
-%mod: ([E] [mod] _ )=0 do $SNAPSHOT "abc.ka"; repeat [true]
 %mod: alarm 0.0 do $SNAPSHOT "abc.ka"
 %mod: alarm 0.25 do $SNAPSHOT "abc.ka"
 %mod: alarm 0.5 do $SNAPSHOT "abc.ka"
