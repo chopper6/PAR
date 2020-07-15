@@ -64,15 +64,16 @@ def time_series_one(data, feature,metric, params, title, ylabel,loglog=False):
     assert(len(data[0][feature][metric]['avg'])==1) #TODO: double check that this makes sense!
     Y_avg = [data[i][feature][metric]['avg'][0] for i in range(params['num_snapshots'])]
     fig = plt.figure(figsize=(12,8))
-    print(X,Y_avg)
 
     if not params['use_CI']:
-        Y_std = [data[i][feature][metric]['std'] for i in range(params['num_snapshots'])]
+        Y_std = [data[i][feature][metric]['std'][0] for i in range(params['num_snapshots'])]
         top, btm = np.add(Y_avg,Y_std), np.subtract(Y_avg,Y_std)
     else:
         assert(False) #gotta fix
         top, btm = Y['CI'][1], Y['CI'][0]
 
+    print('X,Y_avg, Y_std:',X,Y_avg,Y_std)
+    print('top, btm',top,btm)
     if loglog:
         plt.loglog(X,Y_avg,alpha=.8, linewidth=2, color='blue')
     else:
