@@ -47,8 +47,8 @@
 /* Variables */
 
 /* params to be replaced by python script (at '_') */
-%var: 'base_fwd' 1.0
-%var: 'base_rev' 0.001
+%var: 'base_fwd' 0.0005
+%var: 'base_rev' 1e-06
 %var: 'base_catalysis' 10000.0
 %var: 'elong_boost' 400
 %var: 'endo_inhib' 0.02
