@@ -87,7 +87,7 @@
 %init: 100 NAD()
 %init: 0 PARG()
 
-%mod: alarm 0.0 do $SNAPSHOT "abc.ka"
-%mod: alarm 0.25 do $SNAPSHOT "abc.ka"
-%mod: alarm 0.5 do $SNAPSHOT "abc.ka"
-%mod: alarm 0.75 do $SNAPSHOT "abc.ka"
+%mod: alarm 0.25 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.5 do $SNAPSHOT "abc.ka";
+%mod: alarm 0.75 do $SNAPSHOT "abc.ka";
+%mod: alarm 1.0 do $SNAPSHOT "abc.ka";
