@@ -50,20 +50,20 @@ def param_sweep(data, params, variable_values, variable_name, feature_names):
 			param_sweep_one(data[feature][metric], params, variable_values, title, variable_name, ylabel)
 
 
-def time_series(merged_data,params,feature_names, metrics):
+def time_series(data,params,feature_names, metrics):
 	for feature in feature_names:
 		for metric in metrics:
-			asssert(metric in data[feature].keys()) #if error, metric is not calculated in features.extract_stats()
+			assert(metric in data[0][feature].keys()) #if error, metric is not calculated in features.extract_stats()
 			title, ylabel = variable_name + '_x_' + '_' + feature + '_' + metric, feature + '_' + metric
-			time_series_one(data[feature][metric], params, title, feature, loglog=False)
+			time_series_one(data,feature.metric, params, title, feature, loglog=False)
 
-def time_series_one(Y, params, variable_values, title, ylabel,loglog=False):
+def time_series_one(data, feature,metric, params, variable_values, title, ylabel,loglog=False):
 	#print("\nPLOT for %s \n Y, variable_values" %ylabel, Y, variable_values)
 	#print("Yavg: ", Y['avg'])
 	X = [(i+1)*params['time']/params['num_snapshots'] for i in range(len(Y['avg']))]
-
+	y_avg = [data[i][feature][metric]['avg'] for i in range(params['num_snapshots'])]
 	fig = plt.figure(figsize=(12,8))
-	y_avg = Y['avg']
+	print('X,Y=',X,Y)
 	if not params['use_CI']:
 		top, btm = np.add(Y['avg'],Y['std']), np.subtract(Y['avg'],Y['std'])
 	else:
