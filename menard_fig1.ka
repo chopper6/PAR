@@ -55,6 +55,7 @@
 %var: 'PARP_2_PARG' _ //their relative activity
 %var: 'init_DNA' _
 %var: 'amt_PARG_to_add' _
+%var: 'clean_rate' _
 
 /* More Variables */
 /* rates set by other params */
@@ -67,7 +68,6 @@
 %var: 'NP_p_rate' base_fwd
 %var: 'unNP_p_rate' base_rev
 %var: 'unNP_a_rate' base_rev 
-%var: 'clean_rate' base_catalysis
 
 /* calculated rates, specified by constraints */
 %var: 'NG_k_exo' base_fwd*PARP_2_PARG
