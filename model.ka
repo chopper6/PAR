@@ -47,13 +47,14 @@
 /* Variables */
 
 /* params to be replaced by python script (at '_') */
-%var: 'base_fwd' 1000000.0
+%var: 'base_fwd' 1.0
 %var: 'base_rev' 1e-06
-%var: 'base_catalysis' 10000.0
+%var: 'base_catalysis' 10000000.0
 %var: 'elong_boost' 400
 %var: 'endo_inhib' 0.02
-%var: 'PARP_2_PARG' 0 //their relative activity
-%var: 'init_DNA' 1
+%var: 'PARP_2_PARG' 3 //their relative activity
+%var: 'init_DNA' 10
+%var: 'amt_PARG_to_add' _
 
 /* More Variables */
 /* rates set by other params */
@@ -87,6 +88,8 @@
 %init: 10000 NAD()
 %init: 0 PARG()
 
+%mod: alarm 1.0 do $ADD amt_PARG_to_add PARG();
+%mod: alarm 1.0 do $DEL PARP();
 %mod: alarm 0.05 do $SNAPSHOT "0.05.ka";
 %mod: alarm 0.1 do $SNAPSHOT "0.1.ka";
 %mod: alarm 0.15 do $SNAPSHOT "0.15.ka";
