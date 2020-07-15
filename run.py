@@ -167,8 +167,7 @@ def run_sim(params):
 	client.wait_for_simulation_stop()
 	results = client.simulation_plot()
 	snaps = client.simulation_snapshots()
-	num_snaps = len(client.simulation_snapshot(snaps['snapshot_ids']))
-	iter_over = [i for i in range(num_snaps)].reverse() #for some reason sshots are reverse sorted
+	iter_over = [i for i in range(params['num_snapshots'])].reverse() #for some reason sshots are reverse sorted
 	snaps  = [client.simulation_snapshot(snaps['snapshot_ids'][i]) for i in iter_over]
 
 	#for i in rng(snaps['snapshot_ids']):
