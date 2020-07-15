@@ -65,7 +65,7 @@ def extract_stats(data, feature_names, sshot):
 			data[name]['iod'] += [iod]
 			max1 = max(feat)
 			data[name]['max'] += [max1]
-			if len(feat)<1:
+			if len(feat)<=1:
 				data[name]['1:2'] = 0
 			else:
 				feat.remove(max1)
