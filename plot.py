@@ -60,7 +60,7 @@ def time_series(merged_data,params,feature_names, metrics):
 def time_series_one(Y, params, variable_values, title, ylabel,loglog=False):
 	#print("\nPLOT for %s \n Y, variable_values" %ylabel, Y, variable_values)
 	#print("Yavg: ", Y['avg'])
-	X = [i*params['time']/params['num_snapshots'] for i in range(len(Y['avg']))]
+	X = [(i+1)*params['time']/params['num_snapshots'] for i in range(len(Y['avg']))]
 
 	fig = plt.figure(figsize=(12,8))
 	y_avg = Y['avg']
