@@ -71,5 +71,3 @@
 %init: _ PARP()
 %init: _ NAD()
 %init: _ PARG()
-
-%mod: ([E] [mod] _ )=0 do $SNAPSHOT "abc.ka"; repeat [true]
