@@ -55,9 +55,9 @@ def time_series(data,params,feature_names, metrics):
         for metric in metrics:
             assert(metric in data[0][feature].keys()) #if error, metric is not calculated in features.extract_stats()
             title, ylabel = feature + '_' + metric, feature + '_' + metric
-            time_series_one(data,feature,metric, params, title, feature, log='Y')
+            time_series_one(data,feature,metric, params, title, feature, logscale='Y')
 
-def time_series_one(data, feature,metric, params, title, ylabel,loglog=None):
+def time_series_one(data, feature,metric, params, title, ylabel,logscale=None):
     #print("\nPLOT for %s \n Y, variable_values" %ylabel, Y, variable_values)
     #print("Yavg: ", Y['avg'])
     X = [(i+1)*params['time']/params['num_snapshots'] for i in range(params['num_snapshots'])]
@@ -74,11 +74,11 @@ def time_series_one(data, feature,metric, params, title, ylabel,loglog=None):
 
     #print('X,Y_avg, Y_std:',X,Y_avg,Y_std)
     #print('top, btm',top,btm)
-    if loglog is None:
+    if logscale is None:
         plt.plot(X,Y_avg,alpha=.8, linewidth=2, color='blue')
-    elif loglog in [True,'both','XY']:
+    elif logscale  in [True,'both','XY']:
         plt.loglog(X,Y_avg,alpha=.8, linewidth=2, color='blue')
-    elif loglog=='Y':
+    elif logscale =='Y':
         plt.semilogy(X,Y_avg,alpha=.8, linewidth=2, color='blue')
 
 
