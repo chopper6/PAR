@@ -55,15 +55,15 @@ def time_series(data,params,feature_names, metrics):
 		for metric in metrics:
 			assert(metric in data[0][feature].keys()) #if error, metric is not calculated in features.extract_stats()
 			title, ylabel = feature + '_' + metric, feature + '_' + metric
-			time_series_one(data,feature.metric, params, title, feature, loglog=False)
+			time_series_one(data,feature,metric, params, title, feature, loglog=False)
 
-def time_series_one(data, feature,metric, params, variable_values, title, ylabel,loglog=False):
+def time_series_one(data, feature,metric, params, title, ylabel,loglog=False):
 	#print("\nPLOT for %s \n Y, variable_values" %ylabel, Y, variable_values)
 	#print("Yavg: ", Y['avg'])
-	X = [(i+1)*params['time']/params['num_snapshots'] for i in range(len(Y['avg']))]
+	X = [(i+1)*params['time']/params['num_snapshots'] for i in range(params['num_snapshots'])]
 	y_avg = [data[i][feature][metric]['avg'] for i in range(params['num_snapshots'])]
 	fig = plt.figure(figsize=(12,8))
-	print('X,Y=',X,Y)
+	print('X,Y=',X,y_avg)
 	if not params['use_CI']:
 		top, btm = np.add(Y['avg'],Y['std']), np.subtract(Y['avg'],Y['std'])
 	else:
