@@ -36,7 +36,7 @@
 'unNG_bind_exo'	NAD(elong[1/.]),PARG(x[1/.])  @'unNG_k_exo'
 'cut_exo'	NAD(elong[1]),PARG(x[1]) -> .,PARG(x[.])	@cut_exo_k
 
-'NG_bind_endo'	NAD(root{t},pphos[.], acceptor[.]),PARG(x[.]) -> NAD(root{t},pphos[.], acceptor[1]),PARG(x[1]) @'NG_k_endo'
+'NG_bind_endo'	NAD(root{t}, acceptor[.]),PARG(x[.]) -> NAD(root{t}, acceptor[1]),PARG(x[1]) @'NG_k_endo'
 'unNG_bind_endo'	NAD(acceptor[1/.]),PARG(x[1/.]) @'unNG_k_endo'
 'cut_endo'		NAD(root[_]{t},acceptor[1]),PARG(x[1]) -> NAD(root[.]{f},acceptor[.]),PARG(x[.])				@ cut_endo_k
 
@@ -88,7 +88,7 @@
 %init: 1000 NAD()
 %init: 0 PARG()
 
-%mod: alarm 1.0 do $ADD amt_PARG_to_add PARG();
+%mod: alarm 2.0 do $ADD amt_PARG_to_add PARG();
 %mod: alarm 1.0 do $DEL |PARP()| PARP();
 %mod: alarm 0.05 do $SNAPSHOT "0.05.ka";
 %mod: alarm 0.1 do $SNAPSHOT "0.1.ka";
