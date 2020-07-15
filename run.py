@@ -99,7 +99,7 @@ def sweep():
 			sshot = sshots[-1] #get last one
 			features.extract_stats(repeats_data, feature_names,sshot)
 
-		features.merge_repeats(merged_data, repeats_data, feature_names)
+		features.merge_repeats(params,merged_data, repeats_data, feature_names)
 		all_params += [params]
 		
 	util.pickle_it(all_params, merged_data) 
@@ -129,7 +129,7 @@ def time_series():
 			features.extract_stats(data[i], feature_names,sshots[i])
 
 	for i in range(len(data)):
-		features.merge_repeats(merged_data[i], data[i], feature_names)
+		features.merge_repeats(params, merged_data[i], data[i], feature_names)
 		
 	util.pickle_it(params, merged_data) 
 
