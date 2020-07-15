@@ -112,7 +112,7 @@ def time_series():
 	print("\nRunning time series with repeats.\n")
 
 	plot_specs = [{'feature':'size','metric':'sum','logscale':'Y'},{'feature':'branching ratio','metric':'avg','logscale':None}]
-	feature_names = [plot_species[i]['feature'] for i in range(len(plot_specs))]
+	feature_names = [plot_specs[i]['feature'] for i in range(len(plot_specs))]
 	stats = {'avg':[], 'std':[],'CI':[]}
 	merged_data = [{n:{'avg':deepcopy(stats), 'var':deepcopy(stats), 'sum':deepcopy(stats), 'max':deepcopy(stats), 'iod':deepcopy(stats),'1:2':deepcopy(stats)} for n in feature_names} for t in range(params['num_snapshots'])]
 
