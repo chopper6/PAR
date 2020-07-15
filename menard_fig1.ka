@@ -40,8 +40,8 @@
 'unNG_bind_endo'	NAD(acceptor[1/.]),PARG(x[1/.]) @'unNG_k_endo'
 'cut_endo'		NAD(root[_]{t},acceptor[1]),PARG(x[1]) -> NAD(root[.]{f},acceptor[.]),PARG(x[.])				@ cut_endo_k
 
-'clean_elong'		NAD(root[.],elong[1]), NAD(root[1]{t})	-> NAD(root[.], elong[.]), .						@ inf
-'clean_branch'		NAD(root[.],branch[1]), NAD(root[1]{t}) -> NAD(root[.],branch[.]), .						@ inf
+'clean_elong'		NAD(root[.],elong[1]), NAD(root[1]{t})	-> ., NAD(root[.]{f})						@ inf
+'clean_branch'		NAD(root[.],branch[1]), NAD(root[1]{t}) -> ., NAD(root[.]{f})							@ inf
 
 
 /* Variables */
