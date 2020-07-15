@@ -50,12 +50,12 @@ def param_sweep(data, params, variable_values, variable_name, feature_names):
             param_sweep_one(data[feature][metric], params, variable_values, title, variable_name, ylabel)
 
 
-def time_series(data,params,feature_names, metrics):
-    for feature in feature_names:
-        for metric in metrics:
-            assert(metric in data[0][feature].keys()) #if error, metric is not calculated in features.extract_stats()
-            title, ylabel = feature + '_' + metric, feature + '_' + metric
-            time_series_one(data,feature,metric, params, title, feature, logscale='Y')
+def time_series(data,params, plot_specs):
+    for spec in plot_specs:
+        feature, metric, logscale = spec['feature'],spec['metric'],spec['logscale']
+        assert(metric in data[0][feature].keys()) #if error, metric is not calculated in features.extract_stats()
+        title, ylabel = feature + '_' + metric, feature + '_' + metric
+        time_series_one(data,feature,metric, params, title, feature, logscale=logscale)
 
 def time_series_one(data, feature,metric, params, title, ylabel,logscale=None):
     #print("\nPLOT for %s \n Y, variable_values" %ylabel, Y, variable_values)
