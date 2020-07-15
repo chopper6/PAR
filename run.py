@@ -169,7 +169,7 @@ def run_sim(params):
 	snaps = client.simulation_snapshots()
 
 	iter_over = [i for i in range(params['num_snapshots'])].reverse() #for some reason sshots are reverse sorted
-
+	print(iter_over)
 	all_snaps  = [client.simulation_snapshot(snaps['snapshot_ids'][i]) for i in iter_over]
 
 	#for i in rng(snaps['snapshot_ids']):
